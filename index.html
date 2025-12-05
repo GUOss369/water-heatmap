@@ -1,0 +1,2459 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_a925b6bcb2f53050387f58b925b7403e {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/gh/python-visualization/folium@main/folium/templates/leaflet_heat.min.js"></script>
+</head>
+<body>
+    
+    
+<div style="
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    z-index: 9999;
+    background-color: rgba(255,255,255,0.9);
+    padding: 6px 8px;
+    border-radius: 4px;
+    border: 1px solid #999;
+    font-size: 11px;
+    line-height: 1.4;
+    max-width: 190px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    pointer-events: none;
+">
+    <div style="font-weight:bold; margin-bottom:4px;">经营分类图例</div>
+    <div style="margin:2px 0;"><i class="fa fa-arrow-down" style="color:orange;margin-right:4px;"></i>用量减少</div><div style="margin:2px 0;"><i class="fa fa-arrow-up" style="color:red;margin-right:4px;"></i>用量增加</div><div style="margin:2px 0;"><i class="fa fa-check-circle" style="color:green;margin-right:4px;"></i>稳定</div><div style="margin:2px 0;"><i class="fa fa-times-circle" style="color:black;margin-right:4px;"></i>倒闭</div><div style="margin:2px 0;"><i class="fa fa-flag" style="color:purple;margin-right:4px;"></i>新开业</div><div style="margin:2px 0;"><i class="fa fa-ban" style="color:darkred;margin-right:4px;"></i>不走表</div><div style="margin:2px 0;"><i class="fa fa-question-circle" style="color:gray;margin-right:4px;"></i>未知</div>
+</div>
+    
+            <div class="folium-map" id="map_a925b6bcb2f53050387f58b925b7403e" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_a925b6bcb2f53050387f58b925b7403e = L.map(
+                "map_a925b6bcb2f53050387f58b925b7403e",
+                {
+                    center: [39.051627, 115.945948],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_a925b6bcb2f53050387f58b925b7403e);
+
+            
+
+        
+    
+            var tile_layer_9196253e0cdf3204f725cdb295449f71 = L.tileLayer(
+                "https://webrd02.is.autonavi.com/appmaptile?lang=zh_cn\u0026size=1\u0026scale=1\u0026style=8\u0026x={x}\u0026y={y}\u0026z={z}",
+                {
+  "minZoom": 1,
+  "maxZoom": 18,
+  "maxNativeZoom": 18,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://ditu.amap.com/\"\u003e\u9ad8\u5fb7\u5730\u56fe\u003c/a\u003e",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_9196253e0cdf3204f725cdb295449f71.addTo(map_a925b6bcb2f53050387f58b925b7403e);
+        
+    
+            var feature_group_31cad99333891cdf0e33d06960be9131 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var heat_map_a34a427465901c02e8dee8574ce0dbdc = L.heatLayer(
+                [[39.048656, 115.944246, 5.634], [39.050458, 115.94417, 23.262], [39.051728, 115.945804, 1.683], [39.051001, 115.94342, 4.497], [39.050749, 115.942649, 1.362], [39.050474, 115.943062, 3.858], [39.050471, 115.943321, 7.884], [39.050733, 115.945599, 87.0], [39.050461, 115.943996, 17.808], [39.051728, 115.945744, 4.92], [39.051662, 115.946027, 33.981], [39.050417, 115.942873, 0.303], [39.051662, 115.946027, 28.35], [39.050462, 115.942966, 2.781], [39.051722, 115.946444, 3.591], [39.050472, 115.943227, 1.041], [39.054322, 115.949642, 3.27], [39.053728, 115.949755, 3.3600000000000003], [39.06195, 115.951727, 0.0], [39.051823, 115.94981, 50.37], [39.054322, 115.949294, 0.06], [39.053884, 115.950462, 14.01], [39.053591, 115.948846, 7.38], [39.054509, 115.950858, 1.98], [39.055099, 115.949782, 0.0], [39.054852, 115.949793, 14.52], [39.054198, 115.950136, 34.41], [39.054126, 115.949785, 3.12], [39.050387, 115.944915, 73.845], [39.05025, 115.945141, 44.103], [39.049739, 115.945948, 0.0], [39.05048, 115.945161, 37.815], [39.05134, 115.940898, 82.215], [39.054328, 115.944327, 12.285], [39.054309, 115.944195, 0.0], [39.051627, 115.94955, 0.0], [39.050994, 115.949482, 53.625], [39.051603, 115.949551, 0.0], [39.050324, 115.949484, 0.0]],
+                {
+  "minOpacity": 0.5,
+  "maxZoom": 13,
+  "radius": 15,
+  "blur": 20,
+}
+            );
+        
+    
+            heat_map_a34a427465901c02e8dee8574ce0dbdc.addTo(feature_group_31cad99333891cdf0e33d06960be9131);
+        
+    
+            feature_group_31cad99333891cdf0e33d06960be9131.addTo(map_a925b6bcb2f53050387f58b925b7403e);
+        
+    
+            var feature_group_03fad5a16b320e7469741e49a5f3ca3f = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var heat_map_1d68af1179c4f2c2970e97bb98e58910 = L.heatLayer(
+                [[39.048656, 115.944246, 0.06955555555555556], [39.050458, 115.94417, 0.2584666666666667], [39.051728, 115.945804, 0.0187], [39.051001, 115.94342, 0.049966666666666666], [39.050749, 115.942649, 0.015133333333333334], [39.050474, 115.943062, 0.04286666666666667], [39.050471, 115.943321, 0.0876], [39.050733, 115.945599, 0.9666666666666667], [39.050461, 115.943996, 0.19786666666666666], [39.051728, 115.945744, 0.05466666666666667], [39.051662, 115.946027, 0.37756666666666666], [39.050417, 115.942873, 0.0033666666666666667], [39.051662, 115.946027, 0.315], [39.050462, 115.942966, 0.0309], [39.051722, 115.946444, 0.039900000000000005], [39.050472, 115.943227, 0.011566666666666666], [39.054322, 115.949642, 0.037586206896551726], [39.053728, 115.949755, 0.038620689655172416], [39.06195, 115.951727, 0.0], [39.051823, 115.94981, 0.5596666666666666], [39.054322, 115.949294, 0.0006666666666666666], [39.053884, 115.950462, 1.1675], [39.053591, 115.948846, 0.0984], [39.054509, 115.950858, 0.022], [39.055099, 115.949782, 0.0], [39.054852, 115.949793, 0.3025], [39.054198, 115.950136, 0.498695652173913], [39.054126, 115.949785, 0.03586206896551724], [39.050387, 115.944915, 1.23075], [39.05025, 115.945141, 0.5250357142857143], [39.049739, 115.945948, 0.0], [39.05048, 115.945161, 1.8007142857142857], [39.05134, 115.940898, 1.37025], [39.054328, 115.944327, 0.1365], [39.054309, 115.944195, 0.0], [39.051627, 115.94955, 0.0], [39.050994, 115.949482, 2.9791666666666665], [39.051603, 115.949551, 0.0], [39.050324, 115.949484, 0.0]],
+                {
+  "minOpacity": 0.5,
+  "maxZoom": 13,
+  "radius": 15,
+  "blur": 20,
+}
+            );
+        
+    
+            heat_map_1d68af1179c4f2c2970e97bb98e58910.addTo(feature_group_03fad5a16b320e7469741e49a5f3ca3f);
+        
+    
+            var feature_group_e6b3c69aa3f856915510f8b575da6931 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_b91fc38e8dae5bb7714b6d0919c36f48 = L.marker(
+                [39.050994, 115.949482],
+                {
+}
+            ).addTo(feature_group_e6b3c69aa3f856915510f8b575da6931);
+        
+    
+            var div_icon_5cc5cef64cd0789d714eb44077ad7e00 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-size:12px;\n            color:#222;\n            background:rgba(255,255,255,0.96);\n            padding:4px 8px;\n            border-radius:14px;\n            box-shadow:0 1px 4px rgba(0,0,0,0.3);\n            border:0;\n            white-space:nowrap;\n        \"\u003e\n            \u003cdiv style=\"font-weight:bold;\"\u003e1. \u676d\u5dde\u5c0f\u7b3c\u5305\u003c/div\u003e\n            \u003cdiv style=\"font-size:11px;color:#666;\"\u003e\n                \u65e5\u5747\u7528\u6c34\uff1a3.0 m\u00b3\u0026nbsp;|\u0026nbsp;AI \u65e5\u5747\u5ba2\u6d41\uff1a218 \u4eba/\u65e5\n            \u003c/div\u003e\n        \u003c/div\u003e\n        ",
+  "iconSize": [260, 32],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+            marker_b91fc38e8dae5bb7714b6d0919c36f48.setIcon(div_icon_5cc5cef64cd0789d714eb44077ad7e00);
+        
+    
+        var popup_745f38ae04cca74f6d3314dc46b77645 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_d09cd3a7862d63a9e1ab86b69de8ce06 = $(`<div id="html_d09cd3a7862d63a9e1ab86b69de8ce06" style="width: 100.0%; height: 100.0%;"><b>杭州小笼包</b><br>经营分类: 用量增加<br>总用量: 53.62<br>平均用量: 2.98<br><br><b>AI 摄像头分析</b><br>日均进店人数: 218 人/日<br>AI 经营评分: 95/100<br>趋势解读: 客流上升，经营向好</div>`)[0];
+                popup_745f38ae04cca74f6d3314dc46b77645.setContent(html_d09cd3a7862d63a9e1ab86b69de8ce06);
+            
+        
+
+        marker_b91fc38e8dae5bb7714b6d0919c36f48.bindPopup(popup_745f38ae04cca74f6d3314dc46b77645)
+        ;
+
+        
+    
+    
+                marker_b91fc38e8dae5bb7714b6d0919c36f48.setIcon(div_icon_5cc5cef64cd0789d714eb44077ad7e00);
+            
+    
+            var marker_5d010e58d93349c6b2cbad9c712c5e43 = L.marker(
+                [39.05048, 115.945161],
+                {
+}
+            ).addTo(feature_group_e6b3c69aa3f856915510f8b575da6931);
+        
+    
+            var div_icon_fb939c415cf1394008d6506b7c3a5f9c = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-size:12px;\n            color:#222;\n            background:rgba(255,255,255,0.96);\n            padding:4px 8px;\n            border-radius:14px;\n            box-shadow:0 1px 4px rgba(0,0,0,0.3);\n            border:0;\n            white-space:nowrap;\n        \"\u003e\n            \u003cdiv style=\"font-weight:bold;\"\u003e2. \u798f\u79a7\u5c0f\u5403\u003c/div\u003e\n            \u003cdiv style=\"font-size:11px;color:#666;\"\u003e\n                \u65e5\u5747\u7528\u6c34\uff1a1.8 m\u00b3\u0026nbsp;|\u0026nbsp;AI \u65e5\u5747\u5ba2\u6d41\uff1a86 \u4eba/\u65e5\n            \u003c/div\u003e\n        \u003c/div\u003e\n        ",
+  "iconSize": [260, 32],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+            marker_5d010e58d93349c6b2cbad9c712c5e43.setIcon(div_icon_fb939c415cf1394008d6506b7c3a5f9c);
+        
+    
+        var popup_e629ab78371feecfebf3e93d89dde1d7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_dd6d28b9fb12d52ea2bd141f5445e530 = $(`<div id="html_dd6d28b9fb12d52ea2bd141f5445e530" style="width: 100.0%; height: 100.0%;"><b>福禧小吃</b><br>经营分类: 用量减少<br>总用量: 37.81<br>平均用量: 1.80<br><br><b>AI 摄像头分析</b><br>日均进店人数: 86 人/日<br>AI 经营评分: 57/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_e629ab78371feecfebf3e93d89dde1d7.setContent(html_dd6d28b9fb12d52ea2bd141f5445e530);
+            
+        
+
+        marker_5d010e58d93349c6b2cbad9c712c5e43.bindPopup(popup_e629ab78371feecfebf3e93d89dde1d7)
+        ;
+
+        
+    
+    
+                marker_5d010e58d93349c6b2cbad9c712c5e43.setIcon(div_icon_fb939c415cf1394008d6506b7c3a5f9c);
+            
+    
+            var marker_53c8859dbeadce3ae5c30123f4b4a9e3 = L.marker(
+                [39.05134, 115.940898],
+                {
+}
+            ).addTo(feature_group_e6b3c69aa3f856915510f8b575da6931);
+        
+    
+            var div_icon_daf64cc4e2bfbde8d5f9963685e2b355 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-size:12px;\n            color:#222;\n            background:rgba(255,255,255,0.96);\n            padding:4px 8px;\n            border-radius:14px;\n            box-shadow:0 1px 4px rgba(0,0,0,0.3);\n            border:0;\n            white-space:nowrap;\n        \"\u003e\n            \u003cdiv style=\"font-weight:bold;\"\u003e3. \u5df4\u9002\u5f97\u9762\u9910\u996e\u5e97\u003c/div\u003e\n            \u003cdiv style=\"font-size:11px;color:#666;\"\u003e\n                \u65e5\u5747\u7528\u6c34\uff1a1.4 m\u00b3\u0026nbsp;|\u0026nbsp;AI \u65e5\u5747\u5ba2\u6d41\uff1a144 \u4eba/\u65e5\n            \u003c/div\u003e\n        \u003c/div\u003e\n        ",
+  "iconSize": [260, 32],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+            marker_53c8859dbeadce3ae5c30123f4b4a9e3.setIcon(div_icon_daf64cc4e2bfbde8d5f9963685e2b355);
+        
+    
+        var popup_597996f75cbc7afc81a9b6f31813fc2b = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a199acda7853b3f083b6828f2ec00f2d = $(`<div id="html_a199acda7853b3f083b6828f2ec00f2d" style="width: 100.0%; height: 100.0%;"><b>巴适得面餐饮店</b><br>经营分类: 用量减少<br>总用量: 82.22<br>平均用量: 1.37<br><br><b>AI 摄像头分析</b><br>日均进店人数: 144 人/日<br>AI 经营评分: 73/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_597996f75cbc7afc81a9b6f31813fc2b.setContent(html_a199acda7853b3f083b6828f2ec00f2d);
+            
+        
+
+        marker_53c8859dbeadce3ae5c30123f4b4a9e3.bindPopup(popup_597996f75cbc7afc81a9b6f31813fc2b)
+        ;
+
+        
+    
+    
+                marker_53c8859dbeadce3ae5c30123f4b4a9e3.setIcon(div_icon_daf64cc4e2bfbde8d5f9963685e2b355);
+            
+    
+            var marker_4f9c47a8aa242008a35ccce78770b236 = L.marker(
+                [39.050387, 115.944915],
+                {
+}
+            ).addTo(feature_group_e6b3c69aa3f856915510f8b575da6931);
+        
+    
+            var div_icon_736b6584c90fad95368b61f2c1e041f7 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-size:12px;\n            color:#222;\n            background:rgba(255,255,255,0.96);\n            padding:4px 8px;\n            border-radius:14px;\n            box-shadow:0 1px 4px rgba(0,0,0,0.3);\n            border:0;\n            white-space:nowrap;\n        \"\u003e\n            \u003cdiv style=\"font-weight:bold;\"\u003e4. \u5f90\u4e91\u9910\u996e\u003c/div\u003e\n            \u003cdiv style=\"font-size:11px;color:#666;\"\u003e\n                \u65e5\u5747\u7528\u6c34\uff1a1.2 m\u00b3\u0026nbsp;|\u0026nbsp;AI \u65e5\u5747\u5ba2\u6d41\uff1a94 \u4eba/\u65e5\n            \u003c/div\u003e\n        \u003c/div\u003e\n        ",
+  "iconSize": [260, 32],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+            marker_4f9c47a8aa242008a35ccce78770b236.setIcon(div_icon_736b6584c90fad95368b61f2c1e041f7);
+        
+    
+        var popup_76ed8c707c86e4b26f78b2381fc8747d = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_601afa3e4972033b1e2599da52ea6123 = $(`<div id="html_601afa3e4972033b1e2599da52ea6123" style="width: 100.0%; height: 100.0%;"><b>徐云餐饮</b><br>经营分类: 用量减少<br>总用量: 73.84<br>平均用量: 1.23<br><br><b>AI 摄像头分析</b><br>日均进店人数: 94 人/日<br>AI 经营评分: 63/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_76ed8c707c86e4b26f78b2381fc8747d.setContent(html_601afa3e4972033b1e2599da52ea6123);
+            
+        
+
+        marker_4f9c47a8aa242008a35ccce78770b236.bindPopup(popup_76ed8c707c86e4b26f78b2381fc8747d)
+        ;
+
+        
+    
+    
+                marker_4f9c47a8aa242008a35ccce78770b236.setIcon(div_icon_736b6584c90fad95368b61f2c1e041f7);
+            
+    
+            var marker_6dfee3cd826af04f69779132025e981e = L.marker(
+                [39.053884, 115.950462],
+                {
+}
+            ).addTo(feature_group_e6b3c69aa3f856915510f8b575da6931);
+        
+    
+            var div_icon_3b95b5e8ddce2575cc4f8cff70a114cb = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-size:12px;\n            color:#222;\n            background:rgba(255,255,255,0.96);\n            padding:4px 8px;\n            border-radius:14px;\n            box-shadow:0 1px 4px rgba(0,0,0,0.3);\n            border:0;\n            white-space:nowrap;\n        \"\u003e\n            \u003cdiv style=\"font-weight:bold;\"\u003e5. \u6d01\u5e0c\u4e9a\u56fd\u9645\u6d17\u8863\u003c/div\u003e\n            \u003cdiv style=\"font-size:11px;color:#666;\"\u003e\n                \u65e5\u5747\u7528\u6c34\uff1a1.2 m\u00b3\u0026nbsp;|\u0026nbsp;AI \u65e5\u5747\u5ba2\u6d41\uff1a177 \u4eba/\u65e5\n            \u003c/div\u003e\n        \u003c/div\u003e\n        ",
+  "iconSize": [260, 32],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+            marker_6dfee3cd826af04f69779132025e981e.setIcon(div_icon_3b95b5e8ddce2575cc4f8cff70a114cb);
+        
+    
+        var popup_d33a66a4ddbb5ca2c33fc6a36976171a = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8b3368c15681384e73806aa56ab6a859 = $(`<div id="html_8b3368c15681384e73806aa56ab6a859" style="width: 100.0%; height: 100.0%;"><b>洁希亚国际洗衣</b><br>经营分类: 稳定<br>总用量: 14.01<br>平均用量: 1.17<br><br><b>AI 摄像头分析</b><br>日均进店人数: 177 人/日<br>AI 经营评分: 80/100<br>趋势解读: 客流稳定，经营较平稳</div>`)[0];
+                popup_d33a66a4ddbb5ca2c33fc6a36976171a.setContent(html_8b3368c15681384e73806aa56ab6a859);
+            
+        
+
+        marker_6dfee3cd826af04f69779132025e981e.bindPopup(popup_d33a66a4ddbb5ca2c33fc6a36976171a)
+        ;
+
+        
+    
+    
+                marker_6dfee3cd826af04f69779132025e981e.setIcon(div_icon_3b95b5e8ddce2575cc4f8cff70a114cb);
+            
+    
+            var marker_c290702f1a065f123b31c699095a2f33 = L.marker(
+                [39.050733, 115.945599],
+                {
+}
+            ).addTo(feature_group_e6b3c69aa3f856915510f8b575da6931);
+        
+    
+            var div_icon_a1ff3429cb9e38cbfd24b6c8e4caa60b = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-size:12px;\n            color:#222;\n            background:rgba(255,255,255,0.96);\n            padding:4px 8px;\n            border-radius:14px;\n            box-shadow:0 1px 4px rgba(0,0,0,0.3);\n            border:0;\n            white-space:nowrap;\n        \"\u003e\n            \u003cdiv style=\"font-weight:bold;\"\u003e6. \u7c73\u5a1c\u9020\u578b\u003c/div\u003e\n            \u003cdiv style=\"font-size:11px;color:#666;\"\u003e\n                \u65e5\u5747\u7528\u6c34\uff1a1.0 m\u00b3\u0026nbsp;|\u0026nbsp;AI \u65e5\u5747\u5ba2\u6d41\uff1a151 \u4eba/\u65e5\n            \u003c/div\u003e\n        \u003c/div\u003e\n        ",
+  "iconSize": [260, 32],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+            marker_c290702f1a065f123b31c699095a2f33.setIcon(div_icon_a1ff3429cb9e38cbfd24b6c8e4caa60b);
+        
+    
+        var popup_0fa9d5a1103313e9afdb324d4effead6 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_71f3054155d3cbaf0ac93c7cb0c003d7 = $(`<div id="html_71f3054155d3cbaf0ac93c7cb0c003d7" style="width: 100.0%; height: 100.0%;"><b>米娜造型</b><br>经营分类: 用量增加<br>总用量: 87.00<br>平均用量: 0.97<br><br><b>AI 摄像头分析</b><br>日均进店人数: 151 人/日<br>AI 经营评分: 82/100<br>趋势解读: 客流上升，经营向好</div>`)[0];
+                popup_0fa9d5a1103313e9afdb324d4effead6.setContent(html_71f3054155d3cbaf0ac93c7cb0c003d7);
+            
+        
+
+        marker_c290702f1a065f123b31c699095a2f33.bindPopup(popup_0fa9d5a1103313e9afdb324d4effead6)
+        ;
+
+        
+    
+    
+                marker_c290702f1a065f123b31c699095a2f33.setIcon(div_icon_a1ff3429cb9e38cbfd24b6c8e4caa60b);
+            
+    
+            var marker_a82f04baf7b5765b92f727fa222a1e84 = L.marker(
+                [39.051823, 115.94981],
+                {
+}
+            ).addTo(feature_group_e6b3c69aa3f856915510f8b575da6931);
+        
+    
+            var div_icon_75b09ee9424ed817a729b22a4a57822b = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-size:12px;\n            color:#222;\n            background:rgba(255,255,255,0.96);\n            padding:4px 8px;\n            border-radius:14px;\n            box-shadow:0 1px 4px rgba(0,0,0,0.3);\n            border:0;\n            white-space:nowrap;\n        \"\u003e\n            \u003cdiv style=\"font-weight:bold;\"\u003e7. \u5609\u548c\u4e00\u54c1\u003c/div\u003e\n            \u003cdiv style=\"font-size:11px;color:#666;\"\u003e\n                \u65e5\u5747\u7528\u6c34\uff1a0.6 m\u00b3\u0026nbsp;|\u0026nbsp;AI \u65e5\u5747\u5ba2\u6d41\uff1a80 \u4eba/\u65e5\n            \u003c/div\u003e\n        \u003c/div\u003e\n        ",
+  "iconSize": [260, 32],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+            marker_a82f04baf7b5765b92f727fa222a1e84.setIcon(div_icon_75b09ee9424ed817a729b22a4a57822b);
+        
+    
+        var popup_3fdaec4bb9b547c4cd97bece836688d4 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_10d1f2f31dbb2e26a2915776d5e12f30 = $(`<div id="html_10d1f2f31dbb2e26a2915776d5e12f30" style="width: 100.0%; height: 100.0%;"><b>嘉和一品</b><br>经营分类: 用量减少<br>总用量: 50.37<br>平均用量: 0.56<br><br><b>AI 摄像头分析</b><br>日均进店人数: 80 人/日<br>AI 经营评分: 66/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_3fdaec4bb9b547c4cd97bece836688d4.setContent(html_10d1f2f31dbb2e26a2915776d5e12f30);
+            
+        
+
+        marker_a82f04baf7b5765b92f727fa222a1e84.bindPopup(popup_3fdaec4bb9b547c4cd97bece836688d4)
+        ;
+
+        
+    
+    
+                marker_a82f04baf7b5765b92f727fa222a1e84.setIcon(div_icon_75b09ee9424ed817a729b22a4a57822b);
+            
+    
+            var marker_464005d277b868213d521d21b85d4886 = L.marker(
+                [39.05025, 115.945141],
+                {
+}
+            ).addTo(feature_group_e6b3c69aa3f856915510f8b575da6931);
+        
+    
+            var div_icon_5e895d5035b7a5cd26a15f51c16c05d7 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-size:12px;\n            color:#222;\n            background:rgba(255,255,255,0.96);\n            padding:4px 8px;\n            border-radius:14px;\n            box-shadow:0 1px 4px rgba(0,0,0,0.3);\n            border:0;\n            white-space:nowrap;\n        \"\u003e\n            \u003cdiv style=\"font-weight:bold;\"\u003e8. \u90af\u90f8\u5473\u9053\u003c/div\u003e\n            \u003cdiv style=\"font-size:11px;color:#666;\"\u003e\n                \u65e5\u5747\u7528\u6c34\uff1a0.5 m\u00b3\u0026nbsp;|\u0026nbsp;AI \u65e5\u5747\u5ba2\u6d41\uff1a129 \u4eba/\u65e5\n            \u003c/div\u003e\n        \u003c/div\u003e\n        ",
+  "iconSize": [260, 32],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+            marker_464005d277b868213d521d21b85d4886.setIcon(div_icon_5e895d5035b7a5cd26a15f51c16c05d7);
+        
+    
+        var popup_058cd53cb019ba38b2c63a0facb2e666 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_5dfbb747b48440e3a57ab8d1187e98b1 = $(`<div id="html_5dfbb747b48440e3a57ab8d1187e98b1" style="width: 100.0%; height: 100.0%;"><b>邯郸味道</b><br>经营分类: 用量减少<br>总用量: 44.10<br>平均用量: 0.53<br><br><b>AI 摄像头分析</b><br>日均进店人数: 129 人/日<br>AI 经营评分: 70/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_058cd53cb019ba38b2c63a0facb2e666.setContent(html_5dfbb747b48440e3a57ab8d1187e98b1);
+            
+        
+
+        marker_464005d277b868213d521d21b85d4886.bindPopup(popup_058cd53cb019ba38b2c63a0facb2e666)
+        ;
+
+        
+    
+    
+                marker_464005d277b868213d521d21b85d4886.setIcon(div_icon_5e895d5035b7a5cd26a15f51c16c05d7);
+            
+    
+            var marker_cfb82b1d38367c11b8dea9d09815c577 = L.marker(
+                [39.054198, 115.950136],
+                {
+}
+            ).addTo(feature_group_e6b3c69aa3f856915510f8b575da6931);
+        
+    
+            var div_icon_9166bbabeb5f74e2f5cf39cffe170c60 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-size:12px;\n            color:#222;\n            background:rgba(255,255,255,0.96);\n            padding:4px 8px;\n            border-radius:14px;\n            box-shadow:0 1px 4px rgba(0,0,0,0.3);\n            border:0;\n            white-space:nowrap;\n        \"\u003e\n            \u003cdiv style=\"font-weight:bold;\"\u003e9. \u7b2c\u4e00\u6751\uff08\u534e\u671b\u57ce\u5e97\uff09\u003c/div\u003e\n            \u003cdiv style=\"font-size:11px;color:#666;\"\u003e\n                \u65e5\u5747\u7528\u6c34\uff1a0.5 m\u00b3\u0026nbsp;|\u0026nbsp;AI \u65e5\u5747\u5ba2\u6d41\uff1a99 \u4eba/\u65e5\n            \u003c/div\u003e\n        \u003c/div\u003e\n        ",
+  "iconSize": [260, 32],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+            marker_cfb82b1d38367c11b8dea9d09815c577.setIcon(div_icon_9166bbabeb5f74e2f5cf39cffe170c60);
+        
+    
+        var popup_54213b9e61df10b326c49533793fb00f = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_ceb513af874aff8f007cbbe1be21c117 = $(`<div id="html_ceb513af874aff8f007cbbe1be21c117" style="width: 100.0%; height: 100.0%;"><b>第一村（华望城店）</b><br>经营分类: 用量减少<br>总用量: 34.41<br>平均用量: 0.50<br><br><b>AI 摄像头分析</b><br>日均进店人数: 99 人/日<br>AI 经营评分: 68/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_54213b9e61df10b326c49533793fb00f.setContent(html_ceb513af874aff8f007cbbe1be21c117);
+            
+        
+
+        marker_cfb82b1d38367c11b8dea9d09815c577.bindPopup(popup_54213b9e61df10b326c49533793fb00f)
+        ;
+
+        
+    
+    
+                marker_cfb82b1d38367c11b8dea9d09815c577.setIcon(div_icon_9166bbabeb5f74e2f5cf39cffe170c60);
+            
+    
+            var marker_16fb67b3e5c40f8139318396887c9b9e = L.marker(
+                [39.051662, 115.946027],
+                {
+}
+            ).addTo(feature_group_e6b3c69aa3f856915510f8b575da6931);
+        
+    
+            var div_icon_b12650993ac4445d343c934dda7de1d6 = L.divIcon({
+  "html": "\n        \u003cdiv style=\"\n            font-size:12px;\n            color:#222;\n            background:rgba(255,255,255,0.96);\n            padding:4px 8px;\n            border-radius:14px;\n            box-shadow:0 1px 4px rgba(0,0,0,0.3);\n            border:0;\n            white-space:nowrap;\n        \"\u003e\n            \u003cdiv style=\"font-weight:bold;\"\u003e10. \u4e50\u535a\u6559\u80b2\u003c/div\u003e\n            \u003cdiv style=\"font-size:11px;color:#666;\"\u003e\n                \u65e5\u5747\u7528\u6c34\uff1a0.4 m\u00b3\u0026nbsp;|\u0026nbsp;AI \u65e5\u5747\u5ba2\u6d41\uff1a163 \u4eba/\u65e5\n            \u003c/div\u003e\n        \u003c/div\u003e\n        ",
+  "iconSize": [260, 32],
+  "iconAnchor": [0, 0],
+  "className": "empty",
+});
+            marker_16fb67b3e5c40f8139318396887c9b9e.setIcon(div_icon_b12650993ac4445d343c934dda7de1d6);
+        
+    
+        var popup_9eeb1d5f4791778ebf8d084f7c3342ac = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_698cd5ee316fde4302784f3749fba5f1 = $(`<div id="html_698cd5ee316fde4302784f3749fba5f1" style="width: 100.0%; height: 100.0%;"><b>乐博教育</b><br>经营分类: 用量减少<br>总用量: 33.98<br>平均用量: 0.38<br><br><b>AI 摄像头分析</b><br>日均进店人数: 163 人/日<br>AI 经营评分: 63/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_9eeb1d5f4791778ebf8d084f7c3342ac.setContent(html_698cd5ee316fde4302784f3749fba5f1);
+            
+        
+
+        marker_16fb67b3e5c40f8139318396887c9b9e.bindPopup(popup_9eeb1d5f4791778ebf8d084f7c3342ac)
+        ;
+
+        
+    
+    
+                marker_16fb67b3e5c40f8139318396887c9b9e.setIcon(div_icon_b12650993ac4445d343c934dda7de1d6);
+            
+    
+            feature_group_e6b3c69aa3f856915510f8b575da6931.addTo(map_a925b6bcb2f53050387f58b925b7403e);
+        
+    
+            var feature_group_60036c37a8adb0f5c6bda3aa47e61d58 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_9991e35a4eefe8139e3f0828ed423c9d = L.marker(
+                [39.06195, 115.951727],
+                {
+}
+            ).addTo(feature_group_60036c37a8adb0f5c6bda3aa47e61d58);
+        
+    
+            var icon_9b8c49b6f9b44ed736e8c4db28f65df4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a4c30776a3561ff04034f3438406fec8 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_42d142e635c0c4d9b356c488baacf9aa = $(`<div id="html_42d142e635c0c4d9b356c488baacf9aa" style="width: 100.0%; height: 100.0%;"><b>华莱士</b><br>经营分类: 不走表<br>总用量: 0.00<br>平均用量: 0.00<br><br><b>AI 摄像头分析</b><br>日均进店人数: 85 人/日<br>AI 经营评分: 38/100<br>趋势解读: 用水异常，数据需人工核查</div>`)[0];
+                popup_a4c30776a3561ff04034f3438406fec8.setContent(html_42d142e635c0c4d9b356c488baacf9aa);
+            
+        
+
+        marker_9991e35a4eefe8139e3f0828ed423c9d.bindPopup(popup_a4c30776a3561ff04034f3438406fec8)
+        ;
+
+        
+    
+    
+            marker_9991e35a4eefe8139e3f0828ed423c9d.bindTooltip(
+                `<div>
+                     华莱士（不走表｜AI 日均客流≈85人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9991e35a4eefe8139e3f0828ed423c9d.setIcon(icon_9b8c49b6f9b44ed736e8c4db28f65df4);
+            
+    
+            var marker_e26ef231b80216b33768030bbbf7b0ce = L.marker(
+                [39.055099, 115.949782],
+                {
+}
+            ).addTo(feature_group_60036c37a8adb0f5c6bda3aa47e61d58);
+        
+    
+            var icon_4c0c3cad187b8b2f9ae457fff8505eb5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3130bdc3a4977fa421b8dc87b27f815e = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_8123eb2505e9e502e8770b5109b00e7d = $(`<div id="html_8123eb2505e9e502e8770b5109b00e7d" style="width: 100.0%; height: 100.0%;"><b>张市玉合楼</b><br>经营分类: 不走表<br>总用量: 0.00<br>平均用量: 0.00<br><br><b>AI 摄像头分析</b><br>日均进店人数: 88 人/日<br>AI 经营评分: 39/100<br>趋势解读: 用水异常，数据需人工核查</div>`)[0];
+                popup_3130bdc3a4977fa421b8dc87b27f815e.setContent(html_8123eb2505e9e502e8770b5109b00e7d);
+            
+        
+
+        marker_e26ef231b80216b33768030bbbf7b0ce.bindPopup(popup_3130bdc3a4977fa421b8dc87b27f815e)
+        ;
+
+        
+    
+    
+            marker_e26ef231b80216b33768030bbbf7b0ce.bindTooltip(
+                `<div>
+                     张市玉合楼（不走表｜AI 日均客流≈88人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_e26ef231b80216b33768030bbbf7b0ce.setIcon(icon_4c0c3cad187b8b2f9ae457fff8505eb5);
+            
+    
+            var marker_16318d7b66668caf0b345f51fb0a4ae1 = L.marker(
+                [39.049739, 115.945948],
+                {
+}
+            ).addTo(feature_group_60036c37a8adb0f5c6bda3aa47e61d58);
+        
+    
+            var icon_9d4637829e624cb3b9d1d3a7f2b467b8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_04e0d74890e69e60cbaa5647cedeceb1 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_6a2ef4ef9b82044d4ad7e0a7ea131b4e = $(`<div id="html_6a2ef4ef9b82044d4ad7e0a7ea131b4e" style="width: 100.0%; height: 100.0%;"><b>孟小二美食坊</b><br>经营分类: 不走表<br>总用量: 0.00<br>平均用量: 0.00<br><br><b>AI 摄像头分析</b><br>日均进店人数: 68 人/日<br>AI 经营评分: 48/100<br>趋势解读: 用水异常，数据需人工核查</div>`)[0];
+                popup_04e0d74890e69e60cbaa5647cedeceb1.setContent(html_6a2ef4ef9b82044d4ad7e0a7ea131b4e);
+            
+        
+
+        marker_16318d7b66668caf0b345f51fb0a4ae1.bindPopup(popup_04e0d74890e69e60cbaa5647cedeceb1)
+        ;
+
+        
+    
+    
+            marker_16318d7b66668caf0b345f51fb0a4ae1.bindTooltip(
+                `<div>
+                     孟小二美食坊（不走表｜AI 日均客流≈68人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_16318d7b66668caf0b345f51fb0a4ae1.setIcon(icon_9d4637829e624cb3b9d1d3a7f2b467b8);
+            
+    
+            var marker_50ac44c80819d0079f1056ab8da72336 = L.marker(
+                [39.054309, 115.944195],
+                {
+}
+            ).addTo(feature_group_60036c37a8adb0f5c6bda3aa47e61d58);
+        
+    
+            var icon_acd3d3b085e52bdea38d8f875230e19f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5803ff407bff70e8542a523536a552e4 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_a237cabde902a7b62b3252b94468e55a = $(`<div id="html_a237cabde902a7b62b3252b94468e55a" style="width: 100.0%; height: 100.0%;"><b>小拜年</b><br>经营分类: 不走表<br>总用量: 0.00<br>平均用量: 0.00<br><br><b>AI 摄像头分析</b><br>日均进店人数: 89 人/日<br>AI 经营评分: 46/100<br>趋势解读: 用水异常，数据需人工核查</div>`)[0];
+                popup_5803ff407bff70e8542a523536a552e4.setContent(html_a237cabde902a7b62b3252b94468e55a);
+            
+        
+
+        marker_50ac44c80819d0079f1056ab8da72336.bindPopup(popup_5803ff407bff70e8542a523536a552e4)
+        ;
+
+        
+    
+    
+            marker_50ac44c80819d0079f1056ab8da72336.bindTooltip(
+                `<div>
+                     小拜年（不走表｜AI 日均客流≈89人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_50ac44c80819d0079f1056ab8da72336.setIcon(icon_acd3d3b085e52bdea38d8f875230e19f);
+            
+    
+            var marker_badbab61e7f850827d16ced4cefd3d7b = L.marker(
+                [39.051627, 115.94955],
+                {
+}
+            ).addTo(feature_group_60036c37a8adb0f5c6bda3aa47e61d58);
+        
+    
+            var icon_156d9deb604cf78c10f0296fe29c283f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8881551ec8b3a59bec322cf84181cbda = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_d5aa14a488a2e90c2f6ab586d9a75665 = $(`<div id="html_d5aa14a488a2e90c2f6ab586d9a75665" style="width: 100.0%; height: 100.0%;"><b>美宜佳</b><br>经营分类: 不走表<br>总用量: 0.00<br>平均用量: 0.00<br><br><b>AI 摄像头分析</b><br>日均进店人数: 89 人/日<br>AI 经营评分: 59/100<br>趋势解读: 用水异常，数据需人工核查</div>`)[0];
+                popup_8881551ec8b3a59bec322cf84181cbda.setContent(html_d5aa14a488a2e90c2f6ab586d9a75665);
+            
+        
+
+        marker_badbab61e7f850827d16ced4cefd3d7b.bindPopup(popup_8881551ec8b3a59bec322cf84181cbda)
+        ;
+
+        
+    
+    
+            marker_badbab61e7f850827d16ced4cefd3d7b.bindTooltip(
+                `<div>
+                     美宜佳（不走表｜AI 日均客流≈89人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_badbab61e7f850827d16ced4cefd3d7b.setIcon(icon_156d9deb604cf78c10f0296fe29c283f);
+            
+    
+            var marker_aabf572b2ea1c7fcb10de9648e63b43c = L.marker(
+                [39.051603, 115.949551],
+                {
+}
+            ).addTo(feature_group_60036c37a8adb0f5c6bda3aa47e61d58);
+        
+    
+            var icon_57970ebd0c4380b041e238256ed2a151 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_349b09d27317a8acb645f65011f61d03 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_efa0b9b0c3da48ea8132cba0f989fe0e = $(`<div id="html_efa0b9b0c3da48ea8132cba0f989fe0e" style="width: 100.0%; height: 100.0%;"><b>姬之逸美发</b><br>经营分类: 不走表<br>总用量: 0.00<br>平均用量: 0.00<br><br><b>AI 摄像头分析</b><br>日均进店人数: 14 人/日<br>AI 经营评分: 54/100<br>趋势解读: 用水异常，数据需人工核查</div>`)[0];
+                popup_349b09d27317a8acb645f65011f61d03.setContent(html_efa0b9b0c3da48ea8132cba0f989fe0e);
+            
+        
+
+        marker_aabf572b2ea1c7fcb10de9648e63b43c.bindPopup(popup_349b09d27317a8acb645f65011f61d03)
+        ;
+
+        
+    
+    
+            marker_aabf572b2ea1c7fcb10de9648e63b43c.bindTooltip(
+                `<div>
+                     姬之逸美发（不走表｜AI 日均客流≈14人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_aabf572b2ea1c7fcb10de9648e63b43c.setIcon(icon_57970ebd0c4380b041e238256ed2a151);
+            
+    
+            var marker_81c9240a2f6a2af927fb64293ced9002 = L.marker(
+                [39.050324, 115.949484],
+                {
+}
+            ).addTo(feature_group_60036c37a8adb0f5c6bda3aa47e61d58);
+        
+    
+            var icon_41f88a23d198653fe02934193d2ac835 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkred",
+  "iconColor": "white",
+  "icon": "ban",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4fbcee4e16b7219d1686bf919a9dd0b0 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_7b6bb25523536cdccc37f87d7dd45898 = $(`<div id="html_7b6bb25523536cdccc37f87d7dd45898" style="width: 100.0%; height: 100.0%;"><b>东北烧烤</b><br>经营分类: 不走表<br>总用量: 0.00<br>平均用量: 0.00<br><br><b>AI 摄像头分析</b><br>日均进店人数: 82 人/日<br>AI 经营评分: 48/100<br>趋势解读: 用水异常，数据需人工核查</div>`)[0];
+                popup_4fbcee4e16b7219d1686bf919a9dd0b0.setContent(html_7b6bb25523536cdccc37f87d7dd45898);
+            
+        
+
+        marker_81c9240a2f6a2af927fb64293ced9002.bindPopup(popup_4fbcee4e16b7219d1686bf919a9dd0b0)
+        ;
+
+        
+    
+    
+            marker_81c9240a2f6a2af927fb64293ced9002.bindTooltip(
+                `<div>
+                     东北烧烤（不走表｜AI 日均客流≈82人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_81c9240a2f6a2af927fb64293ced9002.setIcon(icon_41f88a23d198653fe02934193d2ac835);
+            
+    
+            feature_group_60036c37a8adb0f5c6bda3aa47e61d58.addTo(map_a925b6bcb2f53050387f58b925b7403e);
+        
+    
+            var feature_group_bfa1076dbe41f3deebdeb59ace99e89a = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_fe851350498d39e226a97585b543b87f = L.marker(
+                [39.048656, 115.944246],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_83c55c10693f7c84c6a8e15fa6eb6e9c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_c9766f2a15e659ad8ea457fd6f2bf7b5 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_8eafa8c2b59a36bb1a5f52b20972a67b = $(`<div id="html_8eafa8c2b59a36bb1a5f52b20972a67b" style="width: 100.0%; height: 100.0%;"><b>958便利店</b><br>经营分类: 用量减少<br>总用量: 5.63<br>平均用量: 0.07<br><br><b>AI 摄像头分析</b><br>日均进店人数: 134 人/日<br>AI 经营评分: 64/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_c9766f2a15e659ad8ea457fd6f2bf7b5.setContent(html_8eafa8c2b59a36bb1a5f52b20972a67b);
+            
+        
+
+        marker_fe851350498d39e226a97585b543b87f.bindPopup(popup_c9766f2a15e659ad8ea457fd6f2bf7b5)
+        ;
+
+        
+    
+    
+            marker_fe851350498d39e226a97585b543b87f.bindTooltip(
+                `<div>
+                     958便利店（用量减少｜AI 日均客流≈134人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_fe851350498d39e226a97585b543b87f.setIcon(icon_83c55c10693f7c84c6a8e15fa6eb6e9c);
+            
+    
+            var marker_cfdc0a40ea58ba8bd77e496a650d21f3 = L.marker(
+                [39.051728, 115.945804],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_3469203a1531d567aa7e31da48932b43 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9df975467730325506787c4688136ea7 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_3d0fcd2c41df8479fa7aa872a40fd436 = $(`<div id="html_3d0fcd2c41df8479fa7aa872a40fd436" style="width: 100.0%; height: 100.0%;"><b>风荷图文广告</b><br>经营分类: 用量减少<br>总用量: 1.68<br>平均用量: 0.02<br><br><b>AI 摄像头分析</b><br>日均进店人数: 112 人/日<br>AI 经营评分: 63/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_9df975467730325506787c4688136ea7.setContent(html_3d0fcd2c41df8479fa7aa872a40fd436);
+            
+        
+
+        marker_cfdc0a40ea58ba8bd77e496a650d21f3.bindPopup(popup_9df975467730325506787c4688136ea7)
+        ;
+
+        
+    
+    
+            marker_cfdc0a40ea58ba8bd77e496a650d21f3.bindTooltip(
+                `<div>
+                     风荷图文广告（用量减少｜AI 日均客流≈112人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_cfdc0a40ea58ba8bd77e496a650d21f3.setIcon(icon_3469203a1531d567aa7e31da48932b43);
+            
+    
+            var marker_225a5fd23ad64daceb1832f2dbf65cbc = L.marker(
+                [39.051001, 115.94342],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_343ca59408cbc9f722ee0ac1c39b6f83 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6ede6cf5bae800bfd0ef88ba7f6c8574 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_c9b806dfdf06d59838b2b842bd75d0ec = $(`<div id="html_c9b806dfdf06d59838b2b842bd75d0ec" style="width: 100.0%; height: 100.0%;"><b>挪瓦咖啡</b><br>经营分类: 用量减少<br>总用量: 4.50<br>平均用量: 0.05<br><br><b>AI 摄像头分析</b><br>日均进店人数: 167 人/日<br>AI 经营评分: 69/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_6ede6cf5bae800bfd0ef88ba7f6c8574.setContent(html_c9b806dfdf06d59838b2b842bd75d0ec);
+            
+        
+
+        marker_225a5fd23ad64daceb1832f2dbf65cbc.bindPopup(popup_6ede6cf5bae800bfd0ef88ba7f6c8574)
+        ;
+
+        
+    
+    
+            marker_225a5fd23ad64daceb1832f2dbf65cbc.bindTooltip(
+                `<div>
+                     挪瓦咖啡（用量减少｜AI 日均客流≈167人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_225a5fd23ad64daceb1832f2dbf65cbc.setIcon(icon_343ca59408cbc9f722ee0ac1c39b6f83);
+            
+    
+            var marker_aca0113c36dc0bfc01e08e3a419d905c = L.marker(
+                [39.050749, 115.942649],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_4e5dc7012af6f3bbefee2c08c5a61da8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_266e792d6dbb7d2c66a8bccc31f75892 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_1cd94f5d4ff91e98516a6e964a7009e9 = $(`<div id="html_1cd94f5d4ff91e98516a6e964a7009e9" style="width: 100.0%; height: 100.0%;"><b>悦之轩便利店</b><br>经营分类: 用量减少<br>总用量: 1.36<br>平均用量: 0.02<br><br><b>AI 摄像头分析</b><br>日均进店人数: 105 人/日<br>AI 经营评分: 68/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_266e792d6dbb7d2c66a8bccc31f75892.setContent(html_1cd94f5d4ff91e98516a6e964a7009e9);
+            
+        
+
+        marker_aca0113c36dc0bfc01e08e3a419d905c.bindPopup(popup_266e792d6dbb7d2c66a8bccc31f75892)
+        ;
+
+        
+    
+    
+            marker_aca0113c36dc0bfc01e08e3a419d905c.bindTooltip(
+                `<div>
+                     悦之轩便利店（用量减少｜AI 日均客流≈105人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_aca0113c36dc0bfc01e08e3a419d905c.setIcon(icon_4e5dc7012af6f3bbefee2c08c5a61da8);
+            
+    
+            var marker_6f7addefffa6325b279b25dbaaff81d3 = L.marker(
+                [39.050474, 115.943062],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_05d64b1f2893cdd40b6de7b77d56ce28 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_742983c7585a3df2ae3a02d477a39c66 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_b322e14ee5908e88c35ae7916ff75d2e = $(`<div id="html_b322e14ee5908e88c35ae7916ff75d2e" style="width: 100.0%; height: 100.0%;"><b>卡秋莎俄品汇</b><br>经营分类: 用量减少<br>总用量: 3.86<br>平均用量: 0.04<br><br><b>AI 摄像头分析</b><br>日均进店人数: 106 人/日<br>AI 经营评分: 62/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_742983c7585a3df2ae3a02d477a39c66.setContent(html_b322e14ee5908e88c35ae7916ff75d2e);
+            
+        
+
+        marker_6f7addefffa6325b279b25dbaaff81d3.bindPopup(popup_742983c7585a3df2ae3a02d477a39c66)
+        ;
+
+        
+    
+    
+            marker_6f7addefffa6325b279b25dbaaff81d3.bindTooltip(
+                `<div>
+                     卡秋莎俄品汇（用量减少｜AI 日均客流≈106人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6f7addefffa6325b279b25dbaaff81d3.setIcon(icon_05d64b1f2893cdd40b6de7b77d56ce28);
+            
+    
+            var marker_925fd84bd459abeab7f44177417ee406 = L.marker(
+                [39.050471, 115.943321],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_6f06cbeedb7ec1efb47c3cf58776e74a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2254814de2a65e7e81e3904e056ffab7 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_fe769c0f700c0d5eaa9f73ed438470c4 = $(`<div id="html_fe769c0f700c0d5eaa9f73ed438470c4" style="width: 100.0%; height: 100.0%;"><b>禾轩饮品店</b><br>经营分类: 用量减少<br>总用量: 7.88<br>平均用量: 0.09<br><br><b>AI 摄像头分析</b><br>日均进店人数: 127 人/日<br>AI 经营评分: 53/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_2254814de2a65e7e81e3904e056ffab7.setContent(html_fe769c0f700c0d5eaa9f73ed438470c4);
+            
+        
+
+        marker_925fd84bd459abeab7f44177417ee406.bindPopup(popup_2254814de2a65e7e81e3904e056ffab7)
+        ;
+
+        
+    
+    
+            marker_925fd84bd459abeab7f44177417ee406.bindTooltip(
+                `<div>
+                     禾轩饮品店（用量减少｜AI 日均客流≈127人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_925fd84bd459abeab7f44177417ee406.setIcon(icon_6f06cbeedb7ec1efb47c3cf58776e74a);
+            
+    
+            var marker_3095c808d80a4ae1e81a88c9b92a9f84 = L.marker(
+                [39.050461, 115.943996],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_48123d82c9df4aeb5fa6f7984ba82e17 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_83df1b64cb2ae9cd69431f726a924539 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_5fb8ba51bc111d0aa707135ab3b9aba6 = $(`<div id="html_5fb8ba51bc111d0aa707135ab3b9aba6" style="width: 100.0%; height: 100.0%;"><b>UCC国际干洗店</b><br>经营分类: 用量减少<br>总用量: 17.81<br>平均用量: 0.20<br><br><b>AI 摄像头分析</b><br>日均进店人数: 89 人/日<br>AI 经营评分: 66/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_83df1b64cb2ae9cd69431f726a924539.setContent(html_5fb8ba51bc111d0aa707135ab3b9aba6);
+            
+        
+
+        marker_3095c808d80a4ae1e81a88c9b92a9f84.bindPopup(popup_83df1b64cb2ae9cd69431f726a924539)
+        ;
+
+        
+    
+    
+            marker_3095c808d80a4ae1e81a88c9b92a9f84.bindTooltip(
+                `<div>
+                     UCC国际干洗店（用量减少｜AI 日均客流≈89人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3095c808d80a4ae1e81a88c9b92a9f84.setIcon(icon_48123d82c9df4aeb5fa6f7984ba82e17);
+            
+    
+            var marker_068c6023a7e6bbeee47435dd6525cf1d = L.marker(
+                [39.051728, 115.945744],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_d288f3344ac529ca65f4891abb9ed8ff = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4213614b0cfdef097a853c2c8f0d90a4 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_05ddccad5956e832e89ddb0541948166 = $(`<div id="html_05ddccad5956e832e89ddb0541948166" style="width: 100.0%; height: 100.0%;"><b>彩萱优品文具</b><br>经营分类: 用量减少<br>总用量: 4.92<br>平均用量: 0.05<br><br><b>AI 摄像头分析</b><br>日均进店人数: 92 人/日<br>AI 经营评分: 56/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_4213614b0cfdef097a853c2c8f0d90a4.setContent(html_05ddccad5956e832e89ddb0541948166);
+            
+        
+
+        marker_068c6023a7e6bbeee47435dd6525cf1d.bindPopup(popup_4213614b0cfdef097a853c2c8f0d90a4)
+        ;
+
+        
+    
+    
+            marker_068c6023a7e6bbeee47435dd6525cf1d.bindTooltip(
+                `<div>
+                     彩萱优品文具（用量减少｜AI 日均客流≈92人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_068c6023a7e6bbeee47435dd6525cf1d.setIcon(icon_d288f3344ac529ca65f4891abb9ed8ff);
+            
+    
+            var marker_3ef55b1c4302abf08008c791e4b977ab = L.marker(
+                [39.051662, 115.946027],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_4083219536c3c8a1ebf631b473a43ff4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8e3cabf99cb94a396d23dbd9cde7779a = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_74ae3ab68925cf7fd39be0333a676b12 = $(`<div id="html_74ae3ab68925cf7fd39be0333a676b12" style="width: 100.0%; height: 100.0%;"><b>乐博教育</b><br>经营分类: 用量减少<br>总用量: 33.98<br>平均用量: 0.38<br><br><b>AI 摄像头分析</b><br>日均进店人数: 163 人/日<br>AI 经营评分: 63/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_8e3cabf99cb94a396d23dbd9cde7779a.setContent(html_74ae3ab68925cf7fd39be0333a676b12);
+            
+        
+
+        marker_3ef55b1c4302abf08008c791e4b977ab.bindPopup(popup_8e3cabf99cb94a396d23dbd9cde7779a)
+        ;
+
+        
+    
+    
+            marker_3ef55b1c4302abf08008c791e4b977ab.bindTooltip(
+                `<div>
+                     乐博教育（用量减少｜AI 日均客流≈163人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3ef55b1c4302abf08008c791e4b977ab.setIcon(icon_4083219536c3c8a1ebf631b473a43ff4);
+            
+    
+            var marker_ebf98f37711d2abcff70979d5c616495 = L.marker(
+                [39.050417, 115.942873],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_78433061daa43f4dde956695cf257d2b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_bd5f0385c77400f1129540d73db9adf7 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_195d6a8a86e33f6ee1bc9703aaae36b7 = $(`<div id="html_195d6a8a86e33f6ee1bc9703aaae36b7" style="width: 100.0%; height: 100.0%;"><b>俊伶美学美甲店</b><br>经营分类: 用量减少<br>总用量: 0.30<br>平均用量: 0.00<br><br><b>AI 摄像头分析</b><br>日均进店人数: 122 人/日<br>AI 经营评分: 56/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_bd5f0385c77400f1129540d73db9adf7.setContent(html_195d6a8a86e33f6ee1bc9703aaae36b7);
+            
+        
+
+        marker_ebf98f37711d2abcff70979d5c616495.bindPopup(popup_bd5f0385c77400f1129540d73db9adf7)
+        ;
+
+        
+    
+    
+            marker_ebf98f37711d2abcff70979d5c616495.bindTooltip(
+                `<div>
+                     俊伶美学美甲店（用量减少｜AI 日均客流≈122人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ebf98f37711d2abcff70979d5c616495.setIcon(icon_78433061daa43f4dde956695cf257d2b);
+            
+    
+            var marker_4bc431ff0d57362237c578d2f8b91581 = L.marker(
+                [39.050462, 115.942966],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_b2eaeec602f39d3e122f776074bf2176 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_217db0ebfcac5d2f44ca590ae09b9361 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_dfbe6ba72023dff408d38e011f8866bd = $(`<div id="html_dfbe6ba72023dff408d38e011f8866bd" style="width: 100.0%; height: 100.0%;"><b>中茶</b><br>经营分类: 用量减少<br>总用量: 2.78<br>平均用量: 0.03<br><br><b>AI 摄像头分析</b><br>日均进店人数: 85 人/日<br>AI 经营评分: 67/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_217db0ebfcac5d2f44ca590ae09b9361.setContent(html_dfbe6ba72023dff408d38e011f8866bd);
+            
+        
+
+        marker_4bc431ff0d57362237c578d2f8b91581.bindPopup(popup_217db0ebfcac5d2f44ca590ae09b9361)
+        ;
+
+        
+    
+    
+            marker_4bc431ff0d57362237c578d2f8b91581.bindTooltip(
+                `<div>
+                     中茶（用量减少｜AI 日均客流≈85人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4bc431ff0d57362237c578d2f8b91581.setIcon(icon_b2eaeec602f39d3e122f776074bf2176);
+            
+    
+            var marker_86e5170f43e04a6198937a8d561d1883 = L.marker(
+                [39.050472, 115.943227],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_81ce261ff965d3ad56bae12579b4a373 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0f0387ccba436e20b4b546712c2c95c8 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_502938b4c197391a68c52b6c04ad1f40 = $(`<div id="html_502938b4c197391a68c52b6c04ad1f40" style="width: 100.0%; height: 100.0%;"><b>中媒广告</b><br>经营分类: 用量减少<br>总用量: 1.04<br>平均用量: 0.01<br><br><b>AI 摄像头分析</b><br>日均进店人数: 101 人/日<br>AI 经营评分: 76/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_0f0387ccba436e20b4b546712c2c95c8.setContent(html_502938b4c197391a68c52b6c04ad1f40);
+            
+        
+
+        marker_86e5170f43e04a6198937a8d561d1883.bindPopup(popup_0f0387ccba436e20b4b546712c2c95c8)
+        ;
+
+        
+    
+    
+            marker_86e5170f43e04a6198937a8d561d1883.bindTooltip(
+                `<div>
+                     中媒广告（用量减少｜AI 日均客流≈101人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_86e5170f43e04a6198937a8d561d1883.setIcon(icon_81ce261ff965d3ad56bae12579b4a373);
+            
+    
+            var marker_1b1d4b3e44531c74f66deea52e5d084c = L.marker(
+                [39.054322, 115.949642],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_628ae5d292d657248486f22031d19c4c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9451565936dd5e7b727b4714c84dab4a = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_cc20c15d910e7fd0fa3ba00a8b08357c = $(`<div id="html_cc20c15d910e7fd0fa3ba00a8b08357c" style="width: 100.0%; height: 100.0%;"><b>安和大药房</b><br>经营分类: 用量减少<br>总用量: 3.27<br>平均用量: 0.04<br><br><b>AI 摄像头分析</b><br>日均进店人数: 119 人/日<br>AI 经营评分: 58/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_9451565936dd5e7b727b4714c84dab4a.setContent(html_cc20c15d910e7fd0fa3ba00a8b08357c);
+            
+        
+
+        marker_1b1d4b3e44531c74f66deea52e5d084c.bindPopup(popup_9451565936dd5e7b727b4714c84dab4a)
+        ;
+
+        
+    
+    
+            marker_1b1d4b3e44531c74f66deea52e5d084c.bindTooltip(
+                `<div>
+                     安和大药房（用量减少｜AI 日均客流≈119人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1b1d4b3e44531c74f66deea52e5d084c.setIcon(icon_628ae5d292d657248486f22031d19c4c);
+            
+    
+            var marker_51bc5c17764bd0aa78f3515e330e7dc6 = L.marker(
+                [39.051823, 115.94981],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_973b9318bf76bf63f9945b9a3634be24 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_6fb457c4d04e5b9d9576b12c549db75b = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_18e7f7e3d934ade2d6ee7de7c28a7161 = $(`<div id="html_18e7f7e3d934ade2d6ee7de7c28a7161" style="width: 100.0%; height: 100.0%;"><b>嘉和一品</b><br>经营分类: 用量减少<br>总用量: 50.37<br>平均用量: 0.56<br><br><b>AI 摄像头分析</b><br>日均进店人数: 80 人/日<br>AI 经营评分: 66/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_6fb457c4d04e5b9d9576b12c549db75b.setContent(html_18e7f7e3d934ade2d6ee7de7c28a7161);
+            
+        
+
+        marker_51bc5c17764bd0aa78f3515e330e7dc6.bindPopup(popup_6fb457c4d04e5b9d9576b12c549db75b)
+        ;
+
+        
+    
+    
+            marker_51bc5c17764bd0aa78f3515e330e7dc6.bindTooltip(
+                `<div>
+                     嘉和一品（用量减少｜AI 日均客流≈80人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_51bc5c17764bd0aa78f3515e330e7dc6.setIcon(icon_973b9318bf76bf63f9945b9a3634be24);
+            
+    
+            var marker_c9d796fcfbd378b0afecfbf978cf176c = L.marker(
+                [39.054322, 115.949294],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_a0f586ee9df38bb2fc9fca07955bf250 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e58c65549fd779ce935c07380407abe2 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_eb050656afebb9c34790b082a046bcde = $(`<div id="html_eb050656afebb9c34790b082a046bcde" style="width: 100.0%; height: 100.0%;"><b>采晨生鲜</b><br>经营分类: 用量减少<br>总用量: 0.06<br>平均用量: 0.00<br><br><b>AI 摄像头分析</b><br>日均进店人数: 142 人/日<br>AI 经营评分: 66/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_e58c65549fd779ce935c07380407abe2.setContent(html_eb050656afebb9c34790b082a046bcde);
+            
+        
+
+        marker_c9d796fcfbd378b0afecfbf978cf176c.bindPopup(popup_e58c65549fd779ce935c07380407abe2)
+        ;
+
+        
+    
+    
+            marker_c9d796fcfbd378b0afecfbf978cf176c.bindTooltip(
+                `<div>
+                     采晨生鲜（用量减少｜AI 日均客流≈142人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c9d796fcfbd378b0afecfbf978cf176c.setIcon(icon_a0f586ee9df38bb2fc9fca07955bf250);
+            
+    
+            var marker_7ac780ad09c897cfeb8a3af767be467c = L.marker(
+                [39.053591, 115.948846],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_e5e6b5be5d0e98e0a3215cb32fa4a6c2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3d54791bf6a75b3ff841f5e16414ba1d = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_f6aedd30befe5d8f39a4714b547b9ae4 = $(`<div id="html_f6aedd30befe5d8f39a4714b547b9ae4" style="width: 100.0%; height: 100.0%;"><b>甲乙丙便利店</b><br>经营分类: 用量减少<br>总用量: 7.38<br>平均用量: 0.10<br><br><b>AI 摄像头分析</b><br>日均进店人数: 75 人/日<br>AI 经营评分: 60/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_3d54791bf6a75b3ff841f5e16414ba1d.setContent(html_f6aedd30befe5d8f39a4714b547b9ae4);
+            
+        
+
+        marker_7ac780ad09c897cfeb8a3af767be467c.bindPopup(popup_3d54791bf6a75b3ff841f5e16414ba1d)
+        ;
+
+        
+    
+    
+            marker_7ac780ad09c897cfeb8a3af767be467c.bindTooltip(
+                `<div>
+                     甲乙丙便利店（用量减少｜AI 日均客流≈75人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7ac780ad09c897cfeb8a3af767be467c.setIcon(icon_e5e6b5be5d0e98e0a3215cb32fa4a6c2);
+            
+    
+            var marker_db372bfc6b56ec0553a932d3ac5aa289 = L.marker(
+                [39.054852, 115.949793],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_ca330451af308bf9c52ea248ceb81e0b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_304c8415d42a2fe1a20a0f5e7bebc5e1 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_f79e02145b13ce250832e58d68689eb7 = $(`<div id="html_f79e02145b13ce250832e58d68689eb7" style="width: 100.0%; height: 100.0%;"><b>初心烧麦</b><br>经营分类: 用量减少<br>总用量: 14.52<br>平均用量: 0.30<br><br><b>AI 摄像头分析</b><br>日均进店人数: 129 人/日<br>AI 经营评分: 62/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_304c8415d42a2fe1a20a0f5e7bebc5e1.setContent(html_f79e02145b13ce250832e58d68689eb7);
+            
+        
+
+        marker_db372bfc6b56ec0553a932d3ac5aa289.bindPopup(popup_304c8415d42a2fe1a20a0f5e7bebc5e1)
+        ;
+
+        
+    
+    
+            marker_db372bfc6b56ec0553a932d3ac5aa289.bindTooltip(
+                `<div>
+                     初心烧麦（用量减少｜AI 日均客流≈129人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_db372bfc6b56ec0553a932d3ac5aa289.setIcon(icon_ca330451af308bf9c52ea248ceb81e0b);
+            
+    
+            var marker_6347d2f87ea5d5b47153f1c57e60ff52 = L.marker(
+                [39.054198, 115.950136],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_1d5d87c85bb5570dfa89e2dcbd5cb499 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ee6f1b2830bead991eeddc1ba2fadd98 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_9bb70e6284491a7b32600747777a3003 = $(`<div id="html_9bb70e6284491a7b32600747777a3003" style="width: 100.0%; height: 100.0%;"><b>第一村（华望城店）</b><br>经营分类: 用量减少<br>总用量: 34.41<br>平均用量: 0.50<br><br><b>AI 摄像头分析</b><br>日均进店人数: 99 人/日<br>AI 经营评分: 68/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_ee6f1b2830bead991eeddc1ba2fadd98.setContent(html_9bb70e6284491a7b32600747777a3003);
+            
+        
+
+        marker_6347d2f87ea5d5b47153f1c57e60ff52.bindPopup(popup_ee6f1b2830bead991eeddc1ba2fadd98)
+        ;
+
+        
+    
+    
+            marker_6347d2f87ea5d5b47153f1c57e60ff52.bindTooltip(
+                `<div>
+                     第一村（华望城店）（用量减少｜AI 日均客流≈99人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6347d2f87ea5d5b47153f1c57e60ff52.setIcon(icon_1d5d87c85bb5570dfa89e2dcbd5cb499);
+            
+    
+            var marker_8bdddb9c16eb43c734099688b1dbd6fb = L.marker(
+                [39.054126, 115.949785],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_719e84474f9f3792aee95eca795f971b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_843d9eb7fa4be9f8de06095f7d9f286f = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_381fce880b43de8ff4e7379e2cb54b5b = $(`<div id="html_381fce880b43de8ff4e7379e2cb54b5b" style="width: 100.0%; height: 100.0%;"><b>嘉和一品</b><br>经营分类: 用量减少<br>总用量: 3.12<br>平均用量: 0.04<br><br><b>AI 摄像头分析</b><br>日均进店人数: 150 人/日<br>AI 经营评分: 70/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_843d9eb7fa4be9f8de06095f7d9f286f.setContent(html_381fce880b43de8ff4e7379e2cb54b5b);
+            
+        
+
+        marker_8bdddb9c16eb43c734099688b1dbd6fb.bindPopup(popup_843d9eb7fa4be9f8de06095f7d9f286f)
+        ;
+
+        
+    
+    
+            marker_8bdddb9c16eb43c734099688b1dbd6fb.bindTooltip(
+                `<div>
+                     嘉和一品（用量减少｜AI 日均客流≈150人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_8bdddb9c16eb43c734099688b1dbd6fb.setIcon(icon_719e84474f9f3792aee95eca795f971b);
+            
+    
+            var marker_f29499e5639aadf14fd74bd41bc669b3 = L.marker(
+                [39.050387, 115.944915],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_60a8e8043eaa4fd3230ade2d27f8ff17 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8cfb4db6b4014d5878091e005deb01c6 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_9323573be2aec31362427722054cd772 = $(`<div id="html_9323573be2aec31362427722054cd772" style="width: 100.0%; height: 100.0%;"><b>徐云餐饮</b><br>经营分类: 用量减少<br>总用量: 73.84<br>平均用量: 1.23<br><br><b>AI 摄像头分析</b><br>日均进店人数: 94 人/日<br>AI 经营评分: 63/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_8cfb4db6b4014d5878091e005deb01c6.setContent(html_9323573be2aec31362427722054cd772);
+            
+        
+
+        marker_f29499e5639aadf14fd74bd41bc669b3.bindPopup(popup_8cfb4db6b4014d5878091e005deb01c6)
+        ;
+
+        
+    
+    
+            marker_f29499e5639aadf14fd74bd41bc669b3.bindTooltip(
+                `<div>
+                     徐云餐饮（用量减少｜AI 日均客流≈94人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f29499e5639aadf14fd74bd41bc669b3.setIcon(icon_60a8e8043eaa4fd3230ade2d27f8ff17);
+            
+    
+            var marker_b02ddad1854554232184bdd5eafe4721 = L.marker(
+                [39.05025, 115.945141],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_82d0d0e096474bff0b5d4b8d7b3fe396 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8845d0493a9129eda6911ae734c2dfca = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_f3681686ce81f22c8ab1e0fd8450ff28 = $(`<div id="html_f3681686ce81f22c8ab1e0fd8450ff28" style="width: 100.0%; height: 100.0%;"><b>邯郸味道</b><br>经营分类: 用量减少<br>总用量: 44.10<br>平均用量: 0.53<br><br><b>AI 摄像头分析</b><br>日均进店人数: 129 人/日<br>AI 经营评分: 70/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_8845d0493a9129eda6911ae734c2dfca.setContent(html_f3681686ce81f22c8ab1e0fd8450ff28);
+            
+        
+
+        marker_b02ddad1854554232184bdd5eafe4721.bindPopup(popup_8845d0493a9129eda6911ae734c2dfca)
+        ;
+
+        
+    
+    
+            marker_b02ddad1854554232184bdd5eafe4721.bindTooltip(
+                `<div>
+                     邯郸味道（用量减少｜AI 日均客流≈129人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b02ddad1854554232184bdd5eafe4721.setIcon(icon_82d0d0e096474bff0b5d4b8d7b3fe396);
+            
+    
+            var marker_d2bdce152b2d463906482687b0d54f00 = L.marker(
+                [39.05048, 115.945161],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_24adfd67fcfad0718b53e3b5147a1297 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a20b660300e1d5560be64b4a642a5507 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_663264a29385da45ad64ede6dc33992a = $(`<div id="html_663264a29385da45ad64ede6dc33992a" style="width: 100.0%; height: 100.0%;"><b>福禧小吃</b><br>经营分类: 用量减少<br>总用量: 37.81<br>平均用量: 1.80<br><br><b>AI 摄像头分析</b><br>日均进店人数: 86 人/日<br>AI 经营评分: 57/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_a20b660300e1d5560be64b4a642a5507.setContent(html_663264a29385da45ad64ede6dc33992a);
+            
+        
+
+        marker_d2bdce152b2d463906482687b0d54f00.bindPopup(popup_a20b660300e1d5560be64b4a642a5507)
+        ;
+
+        
+    
+    
+            marker_d2bdce152b2d463906482687b0d54f00.bindTooltip(
+                `<div>
+                     福禧小吃（用量减少｜AI 日均客流≈86人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_d2bdce152b2d463906482687b0d54f00.setIcon(icon_24adfd67fcfad0718b53e3b5147a1297);
+            
+    
+            var marker_7007915ed2727721fb039bb38dc3e0d6 = L.marker(
+                [39.05134, 115.940898],
+                {
+}
+            ).addTo(feature_group_bfa1076dbe41f3deebdeb59ace99e89a);
+        
+    
+            var icon_7063de220936e2ed07eaf112a5345856 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "orange",
+  "iconColor": "white",
+  "icon": "arrow-down",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ae25bbfa52909fb6e4c668adea05e14b = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_ba0b92e3df18be111f21b522046c0c9a = $(`<div id="html_ba0b92e3df18be111f21b522046c0c9a" style="width: 100.0%; height: 100.0%;"><b>巴适得面餐饮店</b><br>经营分类: 用量减少<br>总用量: 82.22<br>平均用量: 1.37<br><br><b>AI 摄像头分析</b><br>日均进店人数: 144 人/日<br>AI 经营评分: 73/100<br>趋势解读: 客流下滑，需优化经营</div>`)[0];
+                popup_ae25bbfa52909fb6e4c668adea05e14b.setContent(html_ba0b92e3df18be111f21b522046c0c9a);
+            
+        
+
+        marker_7007915ed2727721fb039bb38dc3e0d6.bindPopup(popup_ae25bbfa52909fb6e4c668adea05e14b)
+        ;
+
+        
+    
+    
+            marker_7007915ed2727721fb039bb38dc3e0d6.bindTooltip(
+                `<div>
+                     巴适得面餐饮店（用量减少｜AI 日均客流≈144人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7007915ed2727721fb039bb38dc3e0d6.setIcon(icon_7063de220936e2ed07eaf112a5345856);
+            
+    
+            feature_group_bfa1076dbe41f3deebdeb59ace99e89a.addTo(map_a925b6bcb2f53050387f58b925b7403e);
+        
+    
+            var feature_group_79af4ce22e77315cde42d78a860e81dc = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_40df11236025de41f704ae9d8f880459 = L.marker(
+                [39.050733, 115.945599],
+                {
+}
+            ).addTo(feature_group_79af4ce22e77315cde42d78a860e81dc);
+        
+    
+            var icon_140d01ab41104d3686937b311d2905e4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "arrow-up",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ea008fd4dd9680e291c8a03afd87ef91 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_fd93255979da1a434e4ff0c48c8e29b4 = $(`<div id="html_fd93255979da1a434e4ff0c48c8e29b4" style="width: 100.0%; height: 100.0%;"><b>米娜造型</b><br>经营分类: 用量增加<br>总用量: 87.00<br>平均用量: 0.97<br><br><b>AI 摄像头分析</b><br>日均进店人数: 151 人/日<br>AI 经营评分: 82/100<br>趋势解读: 客流上升，经营向好</div>`)[0];
+                popup_ea008fd4dd9680e291c8a03afd87ef91.setContent(html_fd93255979da1a434e4ff0c48c8e29b4);
+            
+        
+
+        marker_40df11236025de41f704ae9d8f880459.bindPopup(popup_ea008fd4dd9680e291c8a03afd87ef91)
+        ;
+
+        
+    
+    
+            marker_40df11236025de41f704ae9d8f880459.bindTooltip(
+                `<div>
+                     米娜造型（用量增加｜AI 日均客流≈151人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_40df11236025de41f704ae9d8f880459.setIcon(icon_140d01ab41104d3686937b311d2905e4);
+            
+    
+            var marker_9608c95d5bd0f15094ab0b724ff67044 = L.marker(
+                [39.051662, 115.946027],
+                {
+}
+            ).addTo(feature_group_79af4ce22e77315cde42d78a860e81dc);
+        
+    
+            var icon_9903f344aac284610bdd12a132ceefde = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "arrow-up",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_50b33c0159758b1a204fd311dc0e570e = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_d986de8e82abc91981bee811cd7d930a = $(`<div id="html_d986de8e82abc91981bee811cd7d930a" style="width: 100.0%; height: 100.0%;"><b>大圣驾到小儿推拿</b><br>经营分类: 用量增加<br>总用量: 28.35<br>平均用量: 0.32<br><br><b>AI 摄像头分析</b><br>日均进店人数: 198 人/日<br>AI 经营评分: 86/100<br>趋势解读: 客流上升，经营向好</div>`)[0];
+                popup_50b33c0159758b1a204fd311dc0e570e.setContent(html_d986de8e82abc91981bee811cd7d930a);
+            
+        
+
+        marker_9608c95d5bd0f15094ab0b724ff67044.bindPopup(popup_50b33c0159758b1a204fd311dc0e570e)
+        ;
+
+        
+    
+    
+            marker_9608c95d5bd0f15094ab0b724ff67044.bindTooltip(
+                `<div>
+                     大圣驾到小儿推拿（用量增加｜AI 日均客流≈198人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_9608c95d5bd0f15094ab0b724ff67044.setIcon(icon_9903f344aac284610bdd12a132ceefde);
+            
+    
+            var marker_73b0c395a8707d38d75683e366a421b1 = L.marker(
+                [39.054509, 115.950858],
+                {
+}
+            ).addTo(feature_group_79af4ce22e77315cde42d78a860e81dc);
+        
+    
+            var icon_ef3a849f30a51ec8d3c6987206c894a8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "arrow-up",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1eb08573759634183f71474dda6f80d4 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_65d42edd768fe835e8701f3298cc7ec3 = $(`<div id="html_65d42edd768fe835e8701f3298cc7ec3" style="width: 100.0%; height: 100.0%;"><b>早餐铺</b><br>经营分类: 用量增加<br>总用量: 1.98<br>平均用量: 0.02<br><br><b>AI 摄像头分析</b><br>日均进店人数: 201 人/日<br>AI 经营评分: 92/100<br>趋势解读: 客流上升，经营向好</div>`)[0];
+                popup_1eb08573759634183f71474dda6f80d4.setContent(html_65d42edd768fe835e8701f3298cc7ec3);
+            
+        
+
+        marker_73b0c395a8707d38d75683e366a421b1.bindPopup(popup_1eb08573759634183f71474dda6f80d4)
+        ;
+
+        
+    
+    
+            marker_73b0c395a8707d38d75683e366a421b1.bindTooltip(
+                `<div>
+                     早餐铺（用量增加｜AI 日均客流≈201人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_73b0c395a8707d38d75683e366a421b1.setIcon(icon_ef3a849f30a51ec8d3c6987206c894a8);
+            
+    
+            var marker_2911bceda9f44ca06b8a5a9a90c1fd55 = L.marker(
+                [39.050994, 115.949482],
+                {
+}
+            ).addTo(feature_group_79af4ce22e77315cde42d78a860e81dc);
+        
+    
+            var icon_68895ccffa0dfa6eed0931a36b5764be = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "arrow-up",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1d1bd600fab351010183660bf883e9ff = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_89b6f7010e1837740fead831bd97154b = $(`<div id="html_89b6f7010e1837740fead831bd97154b" style="width: 100.0%; height: 100.0%;"><b>杭州小笼包</b><br>经营分类: 用量增加<br>总用量: 53.62<br>平均用量: 2.98<br><br><b>AI 摄像头分析</b><br>日均进店人数: 218 人/日<br>AI 经营评分: 95/100<br>趋势解读: 客流上升，经营向好</div>`)[0];
+                popup_1d1bd600fab351010183660bf883e9ff.setContent(html_89b6f7010e1837740fead831bd97154b);
+            
+        
+
+        marker_2911bceda9f44ca06b8a5a9a90c1fd55.bindPopup(popup_1d1bd600fab351010183660bf883e9ff)
+        ;
+
+        
+    
+    
+            marker_2911bceda9f44ca06b8a5a9a90c1fd55.bindTooltip(
+                `<div>
+                     杭州小笼包（用量增加｜AI 日均客流≈218人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_2911bceda9f44ca06b8a5a9a90c1fd55.setIcon(icon_68895ccffa0dfa6eed0931a36b5764be);
+            
+    
+            feature_group_79af4ce22e77315cde42d78a860e81dc.addTo(map_a925b6bcb2f53050387f58b925b7403e);
+        
+    
+            var feature_group_04a671d02713ce00e78fd1161b309222 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_fb61a2d226064daf41eb044446b710bf = L.marker(
+                [39.050458, 115.94417],
+                {
+}
+            ).addTo(feature_group_04a671d02713ce00e78fd1161b309222);
+        
+    
+            var icon_910c35b8cf60f2388529836d9b18d6af = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "check-circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_09c5fd53f241a7b846426dfe40030462 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_12d22ceb4fb104bc0d7616469588bbec = $(`<div id="html_12d22ceb4fb104bc0d7616469588bbec" style="width: 100.0%; height: 100.0%;"><b>意麦家烘焙</b><br>经营分类: 稳定<br>总用量: 23.26<br>平均用量: 0.26<br><br><b>AI 摄像头分析</b><br>日均进店人数: 192 人/日<br>AI 经营评分: 91/100<br>趋势解读: 客流稳定，经营较平稳</div>`)[0];
+                popup_09c5fd53f241a7b846426dfe40030462.setContent(html_12d22ceb4fb104bc0d7616469588bbec);
+            
+        
+
+        marker_fb61a2d226064daf41eb044446b710bf.bindPopup(popup_09c5fd53f241a7b846426dfe40030462)
+        ;
+
+        
+    
+    
+            marker_fb61a2d226064daf41eb044446b710bf.bindTooltip(
+                `<div>
+                     意麦家烘焙（稳定｜AI 日均客流≈192人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_fb61a2d226064daf41eb044446b710bf.setIcon(icon_910c35b8cf60f2388529836d9b18d6af);
+            
+    
+            var marker_75b2b010ad5d9ec2c69436de0190fbe6 = L.marker(
+                [39.051722, 115.946444],
+                {
+}
+            ).addTo(feature_group_04a671d02713ce00e78fd1161b309222);
+        
+    
+            var icon_dd9269a2f14e72d7ce14c23b5b3d93d9 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "check-circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_4b826f57459464f3151eabc9c2c6b0b9 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_076487ae06b4f9e9d63c2b9252f023dc = $(`<div id="html_076487ae06b4f9e9d63c2b9252f023dc" style="width: 100.0%; height: 100.0%;"><b>诺梦大药房</b><br>经营分类: 稳定<br>总用量: 3.59<br>平均用量: 0.04<br><br><b>AI 摄像头分析</b><br>日均进店人数: 167 人/日<br>AI 经营评分: 80/100<br>趋势解读: 客流稳定，经营较平稳</div>`)[0];
+                popup_4b826f57459464f3151eabc9c2c6b0b9.setContent(html_076487ae06b4f9e9d63c2b9252f023dc);
+            
+        
+
+        marker_75b2b010ad5d9ec2c69436de0190fbe6.bindPopup(popup_4b826f57459464f3151eabc9c2c6b0b9)
+        ;
+
+        
+    
+    
+            marker_75b2b010ad5d9ec2c69436de0190fbe6.bindTooltip(
+                `<div>
+                     诺梦大药房（稳定｜AI 日均客流≈167人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_75b2b010ad5d9ec2c69436de0190fbe6.setIcon(icon_dd9269a2f14e72d7ce14c23b5b3d93d9);
+            
+    
+            var marker_4c80ba7451220ccd9ebf96545e219600 = L.marker(
+                [39.053728, 115.949755],
+                {
+}
+            ).addTo(feature_group_04a671d02713ce00e78fd1161b309222);
+        
+    
+            var icon_3d08b642a50d9d88609ab14dcee0d2a8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "check-circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_fac9e078c782919db484d4b12a144f83 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_4142379a5072098ff7014dd75ef4d173 = $(`<div id="html_4142379a5072098ff7014dd75ef4d173" style="width: 100.0%; height: 100.0%;"><b>京喜便利店</b><br>经营分类: 稳定<br>总用量: 3.36<br>平均用量: 0.04<br><br><b>AI 摄像头分析</b><br>日均进店人数: 196 人/日<br>AI 经营评分: 74/100<br>趋势解读: 客流稳定，经营较平稳</div>`)[0];
+                popup_fac9e078c782919db484d4b12a144f83.setContent(html_4142379a5072098ff7014dd75ef4d173);
+            
+        
+
+        marker_4c80ba7451220ccd9ebf96545e219600.bindPopup(popup_fac9e078c782919db484d4b12a144f83)
+        ;
+
+        
+    
+    
+            marker_4c80ba7451220ccd9ebf96545e219600.bindTooltip(
+                `<div>
+                     京喜便利店（稳定｜AI 日均客流≈196人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4c80ba7451220ccd9ebf96545e219600.setIcon(icon_3d08b642a50d9d88609ab14dcee0d2a8);
+            
+    
+            var marker_f91adeddde569ec5641da009d10bbd28 = L.marker(
+                [39.053884, 115.950462],
+                {
+}
+            ).addTo(feature_group_04a671d02713ce00e78fd1161b309222);
+        
+    
+            var icon_8d4a44f5353833407fafa99cbbb76661 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "check-circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_018155b5534f23d59e9fdce003be4f62 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_1cc268611542d1c10c40f6213efa0d6f = $(`<div id="html_1cc268611542d1c10c40f6213efa0d6f" style="width: 100.0%; height: 100.0%;"><b>洁希亚国际洗衣</b><br>经营分类: 稳定<br>总用量: 14.01<br>平均用量: 1.17<br><br><b>AI 摄像头分析</b><br>日均进店人数: 177 人/日<br>AI 经营评分: 80/100<br>趋势解读: 客流稳定，经营较平稳</div>`)[0];
+                popup_018155b5534f23d59e9fdce003be4f62.setContent(html_1cc268611542d1c10c40f6213efa0d6f);
+            
+        
+
+        marker_f91adeddde569ec5641da009d10bbd28.bindPopup(popup_018155b5534f23d59e9fdce003be4f62)
+        ;
+
+        
+    
+    
+            marker_f91adeddde569ec5641da009d10bbd28.bindTooltip(
+                `<div>
+                     洁希亚国际洗衣（稳定｜AI 日均客流≈177人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f91adeddde569ec5641da009d10bbd28.setIcon(icon_8d4a44f5353833407fafa99cbbb76661);
+            
+    
+            var marker_b50b05fe84f6f2d1ed0a69f77a11c17e = L.marker(
+                [39.054328, 115.944327],
+                {
+}
+            ).addTo(feature_group_04a671d02713ce00e78fd1161b309222);
+        
+    
+            var icon_3b15092c0b5f4086122be45183b813db = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "check-circle",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_1e3d013de000edbdad290d7a9c7ae977 = L.popup({
+  "maxWidth": 320,
+});
+
+        
+            
+                var html_dd96493d7803f8cd6dc8fa9624a3fa5e = $(`<div id="html_dd96493d7803f8cd6dc8fa9624a3fa5e" style="width: 100.0%; height: 100.0%;"><b>九五八便利店</b><br>经营分类: 稳定<br>总用量: 12.29<br>平均用量: 0.14<br><br><b>AI 摄像头分析</b><br>日均进店人数: 178 人/日<br>AI 经营评分: 88/100<br>趋势解读: 客流稳定，经营较平稳</div>`)[0];
+                popup_1e3d013de000edbdad290d7a9c7ae977.setContent(html_dd96493d7803f8cd6dc8fa9624a3fa5e);
+            
+        
+
+        marker_b50b05fe84f6f2d1ed0a69f77a11c17e.bindPopup(popup_1e3d013de000edbdad290d7a9c7ae977)
+        ;
+
+        
+    
+    
+            marker_b50b05fe84f6f2d1ed0a69f77a11c17e.bindTooltip(
+                `<div>
+                     九五八便利店（稳定｜AI 日均客流≈178人/日）
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b50b05fe84f6f2d1ed0a69f77a11c17e.setIcon(icon_3b15092c0b5f4086122be45183b813db);
+            
+    
+            feature_group_04a671d02713ce00e78fd1161b309222.addTo(map_a925b6bcb2f53050387f58b925b7403e);
+        
+    
+            var layer_control_66c2e148c7ad084554cdc5d4eebd476a_layers = {
+                base_layers : {
+                    "\u9ad8\u5fb7\u5730\u56fe" : tile_layer_9196253e0cdf3204f725cdb295449f71,
+                },
+                overlays :  {
+                    "\u5546\u94fa\u603b\u7528\u91cf\uff08Heat\uff09" : feature_group_31cad99333891cdf0e33d06960be9131,
+                    "\u5546\u94fa\u5e73\u5747\u7528\u91cf\uff08Heat\uff09" : feature_group_03fad5a16b320e7469741e49a5f3ca3f,
+                    "Top10 \u6807\u6ce8\uff08\u6309\u5e73\u5747\u7528\u91cf\uff09" : feature_group_e6b3c69aa3f856915510f8b575da6931,
+                    "\u7ecf\u8425\u5206\u7c7b - \u4e0d\u8d70\u8868" : feature_group_60036c37a8adb0f5c6bda3aa47e61d58,
+                    "\u7ecf\u8425\u5206\u7c7b - \u7528\u91cf\u51cf\u5c11" : feature_group_bfa1076dbe41f3deebdeb59ace99e89a,
+                    "\u7ecf\u8425\u5206\u7c7b - \u7528\u91cf\u589e\u52a0" : feature_group_79af4ce22e77315cde42d78a860e81dc,
+                    "\u7ecf\u8425\u5206\u7c7b - \u7a33\u5b9a" : feature_group_04a671d02713ce00e78fd1161b309222,
+                },
+            };
+            let layer_control_66c2e148c7ad084554cdc5d4eebd476a = L.control.layers(
+                layer_control_66c2e148c7ad084554cdc5d4eebd476a_layers.base_layers,
+                layer_control_66c2e148c7ad084554cdc5d4eebd476a_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_a925b6bcb2f53050387f58b925b7403e);
+
+        
+    
+            map_a925b6bcb2f53050387f58b925b7403e.fitBounds(
+                [[39.048656, 115.940898], [39.06195, 115.951727]],
+                {}
+            );
+        
+</script>
+</html>
